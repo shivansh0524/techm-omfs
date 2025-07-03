@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Apply for Loan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black text-white min-h-screen flex items-center justify-center p-6">
+
+<div class="bg-gray-900 p-8 rounded-xl shadow-lg w-full max-w-lg">
+    <h2 class="text-2xl font-bold mb-6 text-center">Loan Application</h2>
+
+    <form th:action="@{/customer/apply}" th:object="${customer}" method="post" class="space-y-4">
+        <input type="number" th:field="*{income}" placeholder="Monthly Income"
+               class="w-full px-4 py-2 bg-gray-800 rounded-lg" required />
+
+        <input type="number" th:field="*{loanAmount}" placeholder="Loan Amount"
+               class="w-full px-4 py-2 bg-gray-800 rounded-lg" required />
+
+        <button type="submit"
+                class="w-full bg-blue-700 hover:bg-blue-600 py-2 rounded-lg font-semibold">
+            Submit Application
+        </button>
+
+        <p th:if="${message}" th:text="${message}" class="text-green-400 mt-2 text-center"></p>
+        <p th:if="${error}" th:text="${error}" class="text-red-400 mt-2 text-center"></p>
+    </form>
+
+    <div class="text-center mt-4">
+        <a th:href="@{/customer/dashboard}" class="text-gray-400 hover:underline">Back to Dashboard</a>
+    </div>
+</div>
+
+</body>
+</html>

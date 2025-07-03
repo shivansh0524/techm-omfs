@@ -1,0 +1,25 @@
+<!-- templates/fragments/sidebar.html -->
+<div th:fragment="sidebar" class="w-64 bg-gray-900 h-screen text-white flex flex-col p-4 space-y-4 fixed left-0 top-0">
+    <div class="text-2xl font-bold mb-6">OMFS</div>
+
+    <!-- Admin Links -->
+    <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+        <a href="/admin/dashboard" class="block py-2 px-3 hover:bg-gray-800 rounded">Dashboard</a>
+        <a href="/admin/loan-reports" class="block py-2 px-3 hover:bg-gray-800 rounded">Loan Reports</a>
+    </div>
+
+    <!-- Lender Links -->
+    <div th:if="${#authorization.expression('hasRole(''LENDER'')')}">
+        <a href="/lender/dashboard" class="block py-2 px-3 hover:bg-gray-800 rounded">Dashboard</a>
+        <a href="/lender/schedule-report" class="block py-2 px-3 hover:bg-gray-800 rounded">Repayment Schedules</a>
+    </div>
+
+    <!-- Customer Links -->
+    <div th:if="${#authorization.expression('hasRole(''CUSTOMER'')')}">
+        <a href="/customer/dashboard" class="block py-2 px-3 hover:bg-gray-800 rounded">Dashboard</a>
+        <a href="/customer/apply" class="block py-2 px-3 hover:bg-gray-800 rounded">Apply Loan</a>
+        <a href="/customer/view" class="block py-2 px-3 hover:bg-gray-800 rounded">My Applications</a>
+    </div>
+
+    <a href="/logout" class="mt-auto bg-red-600 hover:bg-red-500 text-center rounded py-2 px-2">Logout</a>
+</div>

@@ -1,0 +1,61 @@
+<body class="bg-black text-white min-h-screen p-10">
+
+<!-- Toast Notification -->
+<div th:if="${message}" class="mb-4 bg-green-700 text-white px-4 py-2 rounded shadow-lg">
+    <p th:text="${message}">Action Message</p>
+</div>
+
+<h2 class="text-3xl font-bold mb-6 text-center">All Loan Applications</h2>
+
+<div class="overflow-x-auto">
+    <table class="w-full text-left border border-gray-700 bg-gray-900 rounded-xl">
+        <thead>
+        <tr class="bg-gray-800">
+            <th class="p-4">#</th>
+            <th class="p-4">Name</th>
+            <th class="p-4">Email</th>
+            <th class="p-4">Phone</th>
+            <th class="p-4">Income</th>
+            <th class="p-4">Loan Amount</th>
+            <th class="p-4">Status</th>
+            <th class="p-4 text-center">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="app, iterStat : ${applications}" class="border-t border-gray-700 hover:bg-gray-800 transition">
+            <td class="p-4" th:text="${iterStat.count}">1</td>
+            <td class="p-4" th:text="${app.name}">Name</td>
+            <td class="p-4" th:text="${app.email}">email@example.com</td>
+            <td class="p-4" th:text="${app.phone}">1234567890</td>
+            <td class="p-4" th:text="${app.income}">50000</td>
+            <td class="p-4" th:text="${app.loanAmount}">100000</td>
+
+            <!-- Status Badge -->
+            <td class="p-4 font-semibold">
+                <span th:text="${app.status}"
+                      th:classappend="${app.status == 'APPROVED'} ? 'text-green-400' :
+                                      (${app.status == 'REJECTED'} ? 'text-red-400' : 'text-yellow-400')">
+                    PENDING
+                </span>
+            </td>
+
+            <!-- Conditional Buttons -->
+            <td class="p-4 text-center space-x-2">
+                <div th:if="${app.status == 'PENDING'}">
+                    <a th:href="@{'/lender/approve/' + ${app.id}}"
+                       class="bg-green-700 hover:bg-green-600 text-white px-3 py-1 rounded">Approve</a>
+                    <a th:href="@{'/lender/reject/' + ${app.id}}"
+                       class="bg-red-700 hover:bg-red-600 text-white px-3 py-1 rounded">Reject</a>
+                </div>
+                <div th:if="${app.status != 'PENDING'}" class="text-sm text-gray-400 italic">Action Taken</div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="mt-6 text-center">
+    <a href="/lender/dashboard" class="text-blue-500 hover:underline">Back to Dashboard</a>
+</div>
+
+</body>

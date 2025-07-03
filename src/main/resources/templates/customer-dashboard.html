@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Customer Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-950 text-white flex min-h-screen">
+
+<!--&lt;!&ndash; Static Sidebar &ndash;&gt;-->
+<!--<div class="w-64 h-screen bg-gray-900 text-white flex flex-col p-4 space-y-4 fixed left-0 top-0">-->
+<!--    <div class="text-2xl font-bold mb-6">OMFS Customer</div>-->
+<!--    <a href="/customer/dashboard" class="block py-2 px-3 hover:bg-gray-800 rounded">Dashboard</a>-->
+<!--    <a href="/customer/apply" class="block py-2 px-3 hover:bg-gray-800 rounded">Apply for Loan</a>-->
+<!--    <a href="/customer/view" class="block py-2 px-3 hover:bg-gray-800 rounded">My Applications</a>-->
+<!--    <a href="/logout" class="mt-auto bg-red-600 hover:bg-red-500 text-center rounded py-2 px-2">Logout</a>-->
+<!--</div>-->
+
+<!-- Main Content -->
+<div class="ml-8 p-10 w-full bg-gray-950">
+    <h1 class="text-3xl font-bold mb-6">Welcome to Customer Dashboard</h1>
+
+    <div class="grid grid-cols-2 gap-6">
+        <a th:href="@{/customer/apply}" class="bg-blue-700 hover:bg-blue-600 p-6 rounded-lg text-center font-semibold transition">
+            Apply for Loan
+        </a>
+        <a th:href="@{/customer/view}" class="bg-gray-800 hover:bg-gray-700 p-6 rounded-lg text-center font-semibold transition">
+            View My Applications
+        </a>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black text-white min-h-screen">
+
+<!-- Navbar -->
+<nav class="bg-gray-900 text-white p-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50">
+    <a href="/" class="text-xl font-bold">OMFS</a>
+    <div class="space-x-4">
+        <a href="/admin/login" class="hover:text-gray-300">Admin Login</a>
+        <a href="/login" class="hover:text-gray-300">Lender Login</a>
+        <a href="/customer/login" class="hover:text-gray-300">Customer Login</a>
+    </div>
+</nav>
+
+<!-- Page Content -->
+<div class="flex items-center justify-center min-h-screen pt-24 px-4">
+    <div class="bg-gray-900 p-10 rounded-xl shadow-xl w-full max-w-md">
+        <h2 class="text-2xl font-bold mb-6 text-center">Admin Login</h2>
+
+        <form th:action="@{/admin/login}" method="post" class="space-y-4">
+            <input type="email" name="username" placeholder="Email"
+                   class="w-full p-2 rounded bg-gray-800 text-white placeholder-gray-400 border border-gray-700" required />
+
+            <input type="password" name="password" placeholder="Password"
+                   class="w-full p-2 rounded bg-gray-800 text-white placeholder-gray-400 border border-gray-700" required />
+
+            <button type="submit"
+                    class="w-full bg-blue-700 hover:bg-blue-600 text-white p-2 rounded">Login</button>
+        </form>
+
+        <p class="text-sm text-center mt-4">
+            New admin? <a th:href="@{/admin/register}" class="text-blue-400 hover:underline">Register here</a>
+        </p>
+    </div>
+</div>
+
+</body>
+</html>

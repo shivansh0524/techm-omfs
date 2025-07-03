@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Loan Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black text-white min-h-screen p-10">
+<div class="bg-gray-800 rounded-xl shadow-md p-8 max-w-3xl mx-auto">
+    <h1 class="text-3xl font-bold mb-6">Loan Application Details</h1>
+
+    <p><strong>Name:</strong> <span th:text="${customer.name}"></span></p>
+    <p><strong>Email:</strong> <span th:text="${customer.email}"></span></p>
+    <p><strong>Status:</strong> <span th:text="${customer.status}"></span></p>
+    <p><strong>Date:</strong> <span th:text="${customer.date}"></span></p>
+    <p><strong>Lender:</strong> <span th:text="${customer.lender != null ? customer.lender.name : 'N/A'}"></span></p>
+    <div class="bg-gray-800 p-4 rounded-lg mt-4">
+        <h2 class="text-xl font-bold mb-2">Loan EMI Summary</h2>
+        <p>Monthly EMI: ₹ <span th:text="${emi}"></span></p>
+        <p>Total Interest: ₹ <span th:text="${totalInterest}"></span></p>
+        <p>Total Payment: ₹ <span th:text="${totalPayment}"></span></p>
+    </div>
+    <a th:href="@{/admin/loan-report}" class="mt-6 inline-block text-blue-400 hover:underline">← Back to Report</a>
+</div>
+</body>
+</html>

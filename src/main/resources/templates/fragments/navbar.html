@@ -1,0 +1,9 @@
+<!-- templates/fragments/navbar.html -->
+<nav class="bg-gray-900 text-white p-4 flex justify-between items-center">
+    <a href="/" class="text-xl font-bold">OMFS</a>
+    <div class="space-x-4">
+        <a th:href="@{/login}" class="hover:text-gray-300">Admin Login</a>
+        <a th:href="@{/lender/login}" class="hover:text-gray-300">Lender Login</a>
+        <a th:href="@{/customer/login}" class="hover:text-gray-300">Customer Login</a>
+    </div>
+</nav>

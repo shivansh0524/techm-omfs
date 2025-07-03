@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Customer Registration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black text-white min-h-screen flex items-center justify-center p-6">
+
+<div class="bg-gray-900 p-8 rounded-xl shadow-lg w-full max-w-md">
+    <h2 class="text-2xl font-bold mb-6 text-center">Customer Registration</h2>
+    <form th:action="@{/customer/save}" th:object="${customer}" method="post" class="space-y-4">
+        <input type="text" th:field="*{name}" placeholder="Full Name"
+               class="w-full px-4 py-2 bg-gray-800 rounded-lg" required />
+
+        <input type="email" th:field="*{email}" placeholder="Email"
+               class="w-full px-4 py-2 bg-gray-800 rounded-lg" required />
+
+        <input type="password" th:field="*{password}" placeholder="Create Password"
+               class="w-full px-4 py-2 bg-gray-800 rounded-lg" required />
+
+        <input type="text" th:field="*{phone}" placeholder="Phone Number"
+               class="w-full px-4 py-2 bg-gray-800 rounded-lg" required />
+
+        <input type="number" step="0.01" th:field="*{income}" placeholder="Monthly Income"
+               class="w-full px-4 py-2 bg-gray-800 rounded-lg" required />
+
+        <input type="number" step="0.01" th:field="*{loanAmount}" placeholder="Loan Amount"
+               class="w-full px-4 py-2 bg-gray-800 rounded-lg" required />
+
+        <!-- Lender Dropdown -->
+
+        <select th:field="*{lenderId}" class="w-full px-4 py-2 bg-gray-800 rounded-lg text-black" required>
+            <option value="">Select Lender</option>
+            <option th:each="l : ${lenders}" th:value="${l.id}" th:text="${l.name}"></option>
+        </select>
+
+
+
+
+
+        <button type="submit"
+                class="w-full bg-blue-700 hover:bg-blue-600 py-2 rounded-lg font-semibold">
+            Register & Apply
+        </button>
+
+        <p th:if="${message}" th:text="${message}" class="text-green-400 mt-2 text-center"></p>
+        <p th:if="${error}" th:text="${error}" class="text-red-400 mt-2 text-center"></p>
+    </form>
+    <div class="text-center mt-4">
+        <a th:href="@{/customer/login}" class="text-blue-400 hover:underline">Already registered? Login</a>
+    </div>
+</div>
+</body>
+</html>

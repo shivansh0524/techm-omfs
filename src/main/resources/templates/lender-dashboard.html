@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lender Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-950 text-white flex">
+
+<!-- Static Sidebar -->
+<!--<div class="w-64 h-screen bg-gray-900 text-white flex flex-col p-4 space-y-4 fixed left-0 top-0">-->
+<!--    <div class="text-2xl font-bold mb-6">OMFS Lender</div>-->
+<!--    <a href="/lender/dashboard" class="block py-2 px-3 hover:bg-gray-800 rounded">Dashboard</a>-->
+<!--    <a href="/lender/schedule-report" class="block py-2 px-3 hover:bg-gray-800 rounded">Repayment Schedules</a>-->
+<!--    <a href="/logout" class="mt-auto bg-red-600 hover:bg-red-500 text-center rounded py-2 px-2">Logout</a>-->
+<!--</div>-->
+
+<!-- Main Content -->
+<!--<div class="ml-64 p-10 w-full bg-gray-950 min-h-screen">-->
+    <div class="ml-18 p-10 w-full bg-gray-950 min-h-screen">
+    <h1 class="text-3xl font-bold mb-6 text-white">Lender Dashboard</h1>
+
+    <!-- Summary -->
+    <div class="grid grid-cols-3 gap-6 mb-6">
+        <div class="bg-gray-800 p-4 rounded-lg">
+            <p class="text-gray-300">Total Applications</p>
+            <p class="text-2xl font-semibold text-white" th:text="${total}">0</p>
+        </div>
+        <div class="bg-green-700 p-4 rounded-lg">
+            <p class="text-green-200">Approved</p>
+            <p class="text-2xl font-semibold text-white" th:text="${approved}">0</p>
+        </div>
+        <div class="bg-red-700 p-4 rounded-lg">
+            <p class="text-red-200">Rejected</p>
+            <p class="text-2xl font-semibold text-white" th:text="${rejected}">0</p>
+        </div>
+    </div>
+
+    <!-- Filter Form -->
+    <form method="get" class="bg-gray-800 p-4 rounded-lg mb-6 space-y-4">
+        <div class="grid grid-cols-3 gap-4">
+            <select name="status" class="p-2 rounded text-black">
+                <option value="">All Status</option>
+                <option value="APPROVED" th:selected="${selectedStatus == 'APPROVED'}">Approved</option>
+                <option value="REJECTED" th:selected="${selectedStatus == 'REJECTED'}">Rejected</option>
+                <option value="PENDING" th:selected="${selectedStatus == 'PENDING'}">Pending</option>
+            </select>
+            <input type="date" name="from" class="p-2 rounded text-black" th:value="${from}">
+<!--            <input type="date" name="to" class="p-2 rounded text-black" th:value="${to}">-->
+        </div>
+        <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded">Apply Filter</button>
+    </form>
+
+    <!-- Applications Table -->
+    <div class="overflow-x-auto">
+        <table class="table-auto w-full text-sm bg-gray-800 rounded-lg">
+            <thead class="bg-gray-700 text-left text-gray-300">
+            <tr>
+                <th class="px-4 py-2">Name</th>
+                <th class="px-4 py-2">Email</th>
+                <th class="px-4 py-2">Status</th>
+                <th class="px-4 py-2">Loan Amount</th>
+                <th class="px-4 py-2">Date</th>
+                <th class="px-4 py-2">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="c : ${customers}" class="border-t border-gray-600 hover:bg-gray-700">
+                <td class="px-4 py-2" th:text="${c.name}">Name</td>
+                <td class="px-4 py-2" th:text="${c.email}">Email</td>
+                <td class="px-4 py-2" th:text="${c.status}">Status</td>
+                <td class="px-4 py-2" th:text="${c.loanAmount}">Amount</td>
+                <td class="px-4 py-2" th:text="${c.date}">Date</td>
+                <td class="px-4 py-2 space-x-2">
+                    <div th:if="${c.status == 'PENDING'}" class="space-x-2">
+                        <form th:action="@{'/lender/approve/' + ${c.id}}" method="post" class="inline">
+                            <button type="submit" class="bg-green-600 hover:bg-green-700 px-3 py-1 rounded">Approve</button>
+                        </form>
+                        <form th:action="@{'/lender/reject/' + ${c.id}}" method="post" class="inline">
+                            <button type="submit" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded">Reject</button>
+                        </form>
+                    </div>
+                    <div th:if="${c.status != 'PENDING'}" class="italic text-gray-400">Action Taken</div>
+                </td>
+            </tr>
+            <tr th:if="${customers.isEmpty()}" class="text-center text-gray-400">
+                <td colspan="6" class="py-4">No loan applications found for the selected filter.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

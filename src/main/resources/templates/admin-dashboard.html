@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-950 text-gray-100 flex">
+
+<!--&lt;!&ndash; Static Sidebar &ndash;&gt;-->
+<!--<div class="w-64 h-screen bg-gray-900 text-white flex flex-col p-4 space-y-4 fixed left-0 top-0">-->
+<!--    <div class="text-2xl font-bold mb-6">OMFS</div>-->
+<!--    <a href="/admin/dashboard" class="block py-2 px-3 hover:bg-gray-800 rounded">Dashboard</a>-->
+<!--    <a href="/admin/loan-reports" class="block py-2 px-3 hover:bg-gray-800 rounded">Loan Reports</a>-->
+<!--    <a href="/logout" class="mt-auto bg-red-600 hover:bg-red-500 text-center rounded py-2 px-2">Logout</a>-->
+<!--</div>-->
+
+<!-- Main Content -->
+<div class="ml-8 p-10 w-full bg-gray-950 min-h-screen">
+    <h1 class="text-3xl font-bold mb-6 text-white">Admin Loan Report</h1>
+
+    <!-- Summary -->
+    <div class="grid grid-cols-3 gap-6 mb-8">
+        <div class="bg-gray-800 shadow p-4 rounded-lg">
+            <h2 class="text-lg font-semibold text-gray-300">Total Applications</h2>
+            <p class="text-2xl mt-2 text-white" th:text="${total}">0</p>
+        </div>
+        <div class="bg-green-800 shadow p-4 rounded-lg">
+            <h2 class="text-lg font-semibold text-green-200">Approved</h2>
+            <p class="text-2xl mt-2 text-white" th:text="${approved}">0</p>
+        </div>
+        <div class="bg-red-800 shadow p-4 rounded-lg">
+            <h2 class="text-lg font-semibold text-red-200">Rejected</h2>
+            <p class="text-2xl mt-2 text-white" th:text="${rejected}">0</p>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <table class="w-full table-auto bg-gray-900 shadow rounded-lg text-gray-200">
+        <thead class="bg-gray-800 text-left text-gray-300">
+        <tr>
+            <th class="px-4 py-2">Name</th>
+            <th class="px-4 py-2">Email</th>
+            <th class="px-4 py-2">Status</th>
+            <th class="px-4 py-2">Lender</th>
+            <th class="px-4 py-2">Date</th>
+            <th class="px-4 py-2">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="customer : ${customers}" class="hover:bg-gray-800">
+            <td class="px-4 py-2" th:text="${customer.name}">Name</td>
+            <td class="px-4 py-2" th:text="${customer.email}">Email</td>
+            <td class="px-4 py-2" th:text="${customer.status}">Status</td>
+            <td class="px-4 py-2" th:text="${customer.lender != null ? customer.lender.name : 'N/A'}">Lender</td>
+            <td class="px-4 py-2" th:text="${customer.date}">Date</td>
+            <td class="px-4 py-2 space-y-1">
+                <a th:href="@{/admin/loan-details/{id}(id=${customer.id})}" class="text-blue-400 hover:underline block">View Details</a>
+
+                <div th:if="${customer.status == 'PENDING'}">
+                    <form th:action="@{/admin/approve/{id}(id=${customer.id})}" method="post" class="inline">
+                        <button type="submit" class="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700">Approve</button>
+                    </form>
+                    <form th:action="@{/admin/reject/{id}(id=${customer.id})}" method="post" class="inline ml-1">
+                        <button type="submit" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700">Reject</button>
+                    </form>
+                </div>
+
+                <div th:if="${customer.status == 'APPROVED'}" class="mt-1">
+                    <a th:href="@{/admin/schedule/{id}(id=${customer.id})}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded inline-block mt-1">
+                        View Schedule
+                    </a>
+                </div>
+            </td>
+        </tr>
+        <tr th:if="${customers.isEmpty()}" class="text-center text-gray-400">
+            <td colspan="6" class="py-6">No customer applications found.</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Full Report Link -->
+    <div class="mt-6">
+        <a href="/admin/loan-reports" class="text-blue-400 underline hover:text-blue-300 text-lg">
+            → View Full Loan Report with Filters and Charts
+        </a>
+    </div>
+</div>
+</body>
+</html>
+
+
